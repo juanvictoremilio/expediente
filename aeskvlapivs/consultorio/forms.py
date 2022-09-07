@@ -63,7 +63,7 @@ class ReevaluacionForm(forms.ModelForm):
         }
         
 
-class UrgenciasForm(forms.Form):
+class UrgenciasForm(forms.ModelForm):
     class Meta:
         model = Urgencias
         fields = ['nombre', 'edad', 'im_bkground', 'other_bkground', 'tension_sistolica', 'tension_diastolica', 'Diaforesis',
@@ -73,7 +73,7 @@ class UrgenciasForm(forms.Form):
         raw_id_fields = ('nombre', )
         autocomplete_fields = ('nombre',)
         widgets = {
-            'nombre': forms.TextInput(attrs={'class':'form-control'} ),           
+                   
             'im_bkground': forms.Textarea(attrs={'class':'form-control', 
             'placeholder':'Describa por qué llegó el paciente, quien lo trajo o como llegó, qué sucedió antes (se desmayó, tuvo un accidente. empezó a sentirse mal...), describa el habitus exterior y los síntomas que el paciente pueda referir'}),
             'other_bkground': forms.Textarea(attrs={'class':'form-control', 'placeholder' : 'Describa y recopile enfermedades previas, alergias y lo que considere importante'}),

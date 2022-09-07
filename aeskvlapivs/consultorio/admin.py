@@ -25,14 +25,15 @@ class ReevaluacionAdmin(admin.ModelAdmin):
 	'immediate_background', 'timestamp', 'reevaluación']
 	readonly_fields = ('timestamp', 'update')
 	list_filter = ['timestamp', 'entitlement']
-	raw_id_fields = ('paciente',)
 	search_fields = ('paciente__name', 'phone', 'email')
 	autocomplete_fields = ('paciente',)
 
 
 class UrgenciasAdmin(admin.ModelAdmin):
 	list_display = ['nombre', 'dxs', 'NEUROLOGICO', 'RESPIRATORIO', 'HEMODINAMICO']
-	raw_id_fields = ('nombre',)
+	autocomplete_fields = ('nombre',)
+	readonly_fields = ('timestamp', 'update')
+	search_fields = ('paciente__name',)
 
 class Media:
         css = {

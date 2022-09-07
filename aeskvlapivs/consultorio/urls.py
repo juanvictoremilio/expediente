@@ -31,7 +31,7 @@ consultorio_patterns = ([
 
     path('urgencias/', UrgenciasListView.as_view(), name='pacientes_urgencias'),
     path('create_urgencias/', UrgenciasCreate.as_view(),name='nueva_urgencia'),
-    path('<int:pk>/', UrgenciasDetailView.as_view(), name='resumen_urgencias'),
+    path('<int:pk>/slugify', UrgenciasDetailView.as_view(), name='urgencias'),
     path('update_urgencias/<int:pk>/', UrgenciasUpdate.as_view(),name='actualizar_urgencia'),    
     path('delete_urgencias/<int:pk>/', UrgenciasDeleteView.as_view(),name='eliminar_urgencia'),
     path("search_urgencias/", SearchUrgenciasResultsView.as_view(), name="search_results_urgencias"),

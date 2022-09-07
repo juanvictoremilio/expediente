@@ -2,13 +2,13 @@
 
 <h1>Search Results</h1>
 
-<form action="{% url 'search_results' %}" method="get">
+<form action="{% url 'search_results_urgencias' %}" method="get">
   <input name="q" type="text" placeholder="Search...">
 </form>
 <ul>
-  {% for urg in urgencias_list%}
+  {% for urg in urgencias_list %}
     <li>
-      {{ urg.name }}
+      {{ object.nombre }}
     </li>
     
   {% endfor %}

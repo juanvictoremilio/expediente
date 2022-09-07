@@ -334,7 +334,6 @@ class Reevaluacion(models.Model):
 
     age = models.SmallIntegerField(default=0, verbose_name='Edad')
 
-
     entitlement = models.CharField(max_length=50, choices=DERECHOHABIENCIA, blank=True, null=True, verbose_name='Derechohabiencia')
 
     specify= models.CharField(max_length=30, verbose_name='Especifique otra derechohabiencia', blank=True, null=True)
@@ -465,9 +464,9 @@ class Urgencias(models.Model):
     Diaforesis = models.CharField(max_length=100,choices=AFIRMACION_SIMPLE, blank=True, null=True )
 
 
-    fc = models.IntegerField(blank=True, null=True, verbose_name='FC')
-    fr= models.IntegerField(blank=True, null=True, verbose_name='FR')
-    O2 = models.PositiveSmallIntegerField(blank=True, null=True, help_text='En litros/min')
+    fc = models.IntegerField(default=0, blank=True, null=True, verbose_name='FC')
+    fr= models.IntegerField(default=0, blank=True, null=True, verbose_name='FR')
+    O2 = models.PositiveSmallIntegerField(default=0, blank=True, null=True, help_text='En litros/min')
     FiO2 = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2, default=.21, help_text= 'No escriba aquí')
     saturacion = models.IntegerField(blank=True, null=True, verbose_name='Sa02', default=1)
     SpFI = models.PositiveSmallIntegerField(blank=True, null=True, help_text='No escriba aquí')
@@ -488,7 +487,7 @@ class Urgencias(models.Model):
     U = 'Sin Respuesta'
     CONC = [(A, 'Alerta'), (V, 'Respuesta Verbal'), (P, 'Respuesta al Dolor'),
     (U, 'Sin Respuesta'),]
-    AVPU =  models.CharField(max_length=50, choices=CONC, verbose_name='Estado de Conciencia')
+    AVPU =  models.CharField(max_length=50, choices=CONC, verbose_name='Estado de Conciencia', blank=True, null=True)
 
     #PARAMETROS DE GLASGOW
     Espontanea = 4 
@@ -531,6 +530,9 @@ class Urgencias(models.Model):
     HEMODINAMICO = models.CharField(max_length=100, blank=True, null=True, help_text='No escriba aquí')
 
     INFECCIOSO = models.CharField(max_length=100, blank=True, null=True, help_text='No escriba aquí')
+
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name='Fecha de Registro')
+    update = models.DateTimeField(auto_now=True, verbose_name='Fecha de Actualización')
 
     
 
@@ -587,7 +589,7 @@ class Urgencias(models.Model):
     @property
     def shock(self):
         if self.pam < 70 and self.fc >95 and self.Diaforesis == 'POS' :
-            return 'Descarte Estado de Choque '
+            return 'Descarte Estado de Choque o asegúrese de haber checado TA y FC '
 
         else:
             return ''
@@ -627,10 +629,6 @@ class Urgencias(models.Model):
     def glasgow(self):
         return self.apertura_ocular + self.Respuesta_Verbal + self.Respuesta_Motora 
 
-    @property
-    def qsofa(self):
-        if self.tension_sistolica < 100 and self.ESCALA_DE_GLASGOW < 15 and self.fc >22:
-            return 'qSOFA indica descartar Sepsis'
 
     @property
     def qsofa(self):
@@ -657,8 +655,11 @@ class Urgencias(models.Model):
         
 
     class Meta:
-        
+        ordering = ('-timestamp',)       
         verbose_name_plural='c) Urgencias, Evaluación Primaria'
+        
+    
+            
 
 
 

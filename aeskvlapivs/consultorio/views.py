@@ -157,7 +157,6 @@ class ReevaluacionCreate(CreateView):
     success_url = reverse_lazy('consultorio:reevaluaciones')
 
 
-
 @method_decorator(staff_member_required, name='dispatch')
 class ReevaluacionUpdate(UpdateView):
     model = Reevaluacion
@@ -206,7 +205,7 @@ class SearchUrgenciasResultsView(ListView):
     def get_queryset(self):  # new
         query = self.request.GET.get("q")
         object_list = Urgencias.objects.filter(
-            Q(paciente__nombre__icontains=query)
+            Q(nombre__name__icontains=query)
         )
         return object_list
 
@@ -226,7 +225,7 @@ class UrgenciasDetailView(DetailView):
 class UrgenciasCreate(CreateView):
     model = Urgencias
     form_class = UrgenciasForm
-    success_url = reverse_lazy('consultorio:nueva_urgencia')
+    success_url = reverse_lazy('consultorio:pacientes_urgencias')
 
 
 
