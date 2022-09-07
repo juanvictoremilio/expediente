@@ -243,7 +243,7 @@ class UrgenciasUpdate(UpdateView):
 @method_decorator(staff_member_required, name='dispatch')
 class UrgenciasDeleteView(DeleteView):
     model = Urgencias
-    success_url = reverse_lazy('consultorio:eliminar_urgencia')
+    success_url = reverse_lazy('consultorio:pacientes_urgencias')
 
 
 
